@@ -1,8 +1,8 @@
 "use module"
 
 export const
-  lifetimes= Symbol.for( "extendable-event:extend-lifetime-promises"),
-  watched= Symbol.for( "extendable-event:watched")
+  $lifetimes= Symbol.for( "extendable-event:extend-lifetime-promises"),
+  $watched= Symbol.for( "extendable-event:watched")
 
 export function ExtendableEvent(){
 	this[ lifetimes]= []
@@ -26,12 +26,6 @@ ExtendableEvent.prototype.then= async function(){
 		}
 	}
 }
-Object.defineProperty( ExtendableEvent.prototype, "pendingLifetimes", {
-	get: function(){
-		
-	}
-})
-
 ExtendableEvent.mixin= function( klass){
 }
 
