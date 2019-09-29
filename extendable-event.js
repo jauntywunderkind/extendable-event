@@ -11,6 +11,10 @@ export function ExtendableEvent(){
 	this[ $lifetimes]= []
 	return this
 }
+if( typeof CustomEvent!== "undefined"){
+	ExtendableEvent.prototype= CustomEvent
+	ExtendableEvent.prototype.constructor= ExtendableEvent
+}
 export default ExtendableEvent
 
 ExtendableEvent.prototype.waitUntil= function( promise){
