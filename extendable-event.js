@@ -1,11 +1,12 @@
 "use module"
 
 export const
-  $lifetimes= Symbol.for( "extendable-event:extend-lifetime-promises"),
+  // how many 
+  $lifetimes= Symbol.for( "extendable-event:lifetimes),
   // these are all for "pendingCount":
-  $watched= Symbol.for( "extendable-event:watched"),
-  $resolved= Symbol.for( "extendable-event:resolved"),
-  $watcher= Symbol.for( "extendable-event:watcher")
+  $resolved= Symbol.for( "extendable-event:pending:resolved"), // how many have finished
+  $watcher= Symbol.for( "extendable-event:pending:watcher") // the handler to assign to promises
+  $watched= Symbol.for( "extendable-event:pending:watched"), // how many have been watched
 
 export function ExtendableEvent( init){
 	if( typeof CustomEvent!== "undefined"){
@@ -39,7 +40,7 @@ ExtendableEvent.prototype.then= async function(){
 ExtendableEvent.prototype.pendingCount= async function(){
 	const watcher= this[ $watcher]|| (this[ $watcher]= ()=> ++this[ $resolved])
 	for( let i= this[ $watched]|| 0; i< this[ $lifetimes].length; ++i){
-		this[ $lifetimes].then( watcher)
+		this[ $lifetimes].then( watcher, watcher)
 	}
 	this[ $watched]= this[ $lifetimes].length= 0
 	await delay()
