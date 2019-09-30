@@ -7,7 +7,10 @@ export const
   $resolved= Symbol.for( "extendable-event:resolved"),
   $watcher= Symbol.for( "extendable-event:watcher")
 
-export function ExtendableEvent(){
+export function ExtendableEvent( init){
+	if( typeof CustomEvent!== "undefined"){
+		CustomEvent.call( this, init)
+	}
 	this[ $lifetimes]= []
 	return this
 }
